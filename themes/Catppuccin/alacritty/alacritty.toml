@@ -1,0 +1,11 @@
+shell = "/usr/bin/fish"
+import = [
+  "/usr/lib/node_modules/alacritty-themes/themes/Catppuccin-Mocha.toml"
+]
+# Test
+[font]
+size = 9
+
+  [font.normal]
+  family = "JetBrainsMonoNL Nerd Font"
+  style = "Regular"

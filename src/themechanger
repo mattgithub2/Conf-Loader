@@ -1,0 +1,45 @@
+#! /bin/bash
+ROOT_DIR="$HOME/config-switcher"
+SRC_DIR="$HOME/config-switcher/src"
+THEME_DIR="$HOME/config-switcher/themes"
+WALLPAPER_DIR="$HOME/config-switcher/wallpapers"
+
+> $SRC_DIR/themes.txt
+
+cd $THEME_DIR
+for i in *; do
+    echo $i >> $SRC_DIR/themes.txt
+done
+
+cd "$HOME/config-switcher/src" || exit
+
+./main
+theme=$(cat tmp.txt)
+
+rm -rf themes.txt
+rm -rf tmp.txt
+
+if [ "$theme" = "Catppuccin" ]; then
+
+    wallpaper="$WALLPAPER_DIR/catppuccin.jpg"
+    nitrogen --set-zoom-fill "$wallpaper" --save
+    
+    cp "$THEME_DIR/Catppuccin/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+
+    cp "$THEME_DIR/Catppuccin/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+    $HOME/.config/bspwm/bspwmrc
+
+    cp "$THEME_DIR/Catppuccin/fish/config.fish" "$HOME/.config/fish/config.fish"
+    cp "$THEME_DIR/Catppuccin/i3/config" "$HOME/.config/i3/config"
+    cp "$THEME_DIR/Catppuccin/picom/picom.conf" "$HOME/.config/picom/picom.conf"
+    cp "$THEME_DIR/Catppuccin/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
+    
+    if ! pgrep picom > /dev/null; then
+        picom --experimental-backends -b
+    else 
+        kill picom; picom --experimental-backends -b
+    fi
+
+elif [ "$theme" = "gruvbox" ]; then
+
+fi
