@@ -109,7 +109,7 @@ int main(int argc, char **argv){
     wrefresh(artwork);
 
     keypad(menu, true);
-    wmove(menu,1,1);
+    // wmove(menu,1,1);
     wrefresh(menu);
     std::string theme = menu_options(menu);
 

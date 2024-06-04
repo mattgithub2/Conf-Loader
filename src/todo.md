@@ -1,4 +1,4 @@
-# Config Switcher
+ Config Switcher
 TUI tool that allows you to set configs for you linux machine
 
 - Create a tui that gives the user a menu of configs to choose from

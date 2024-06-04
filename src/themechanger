@@ -33,13 +33,58 @@ if [ "$theme" = "Catppuccin" ]; then
     cp "$THEME_DIR/Catppuccin/i3/config" "$HOME/.config/i3/config"
     cp "$THEME_DIR/Catppuccin/picom/picom.conf" "$HOME/.config/picom/picom.conf"
     cp "$THEME_DIR/Catppuccin/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
+    cp "$THEME_DIR/Catppuccin/polybar-collection/launch.sh" "$HOME/polybar-collection/launch.sh"
+    cp "$THEME_DIR/Catppuccin/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
+    cp "$THEME_DIR/Catppuccin/polybar-collection/launch.sh" "$HOME/polybar-collection/launch.sh"
+    cp "$THEME_DIR/Catppuccin/polybar-collection/modules.ini" "$HOME/polybar-collection/modules.ini"
+    
+    # TODO
+    # nvim configuration changes
+    # cp "$THEME_DIR/Catppuccin/nvim/init.lua" "$HOME/.config/nvim/init.lua"
     
     if ! pgrep picom > /dev/null; then
         picom --experimental-backends -b
     else 
-        kill picom; picom --experimental-backends -b
+        pkill picom; picom --experimental-backends -b
+
+    fi
+    if ! pgrep polybar > /dev/null; then
+        $HOME/polybar-collection/launch.sh > /dev/null 2>&1
+    else
+        pkill polybar
+        $HOME/polybar-collection/launch.sh > /dev/null 2>&1
     fi
 
-elif [ "$theme" = "gruvbox" ]; then
+    pkill -USR1 -x sxhkd
 
+elif [ "$theme" = "gruvbox" ]; then
+    wallpaper="$WALLPAPER_DIR/gruv.jpg"
+    nitrogen --set-zoom-fill "$wallpaper" --save
+
+    cp "$THEME_DIR/gruvbox/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+
+    cp "$THEME_DIR/gruvbox/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+    $HOME/.config/bspwm/bspwmrc
+
+    cp "$THEME_DIR/gruvbox/fish/config.fish" "$HOME/.config/fish/config.fish"
+    cp "$THEME_DIR/gruvbox/i3/config" "$HOME/.config/i3/config"
+    cp "$THEME_DIR/gruvbox/picom/picom.conf" "$HOME/.config/picom/picom.conf"
+    cp "$THEME_DIR/gruvbox/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
+    cp "$THEME_DIR/gruvbox/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
+    cp "$THEME_DIR/gruvbox/polybar-collection/launch.sh" "$HOME/polybar-collection/launch.sh"
+    cp "$THEME_DIR/gruvbox/polybar-collection/modules.ini" "$HOME/polybar-collection/modules.ini"
+    
+    if ! pgrep picom > /dev/null; then
+        picom --experimental-backends -b
+    else 
+        pkill picom; picom --experimental-backends -b
+    fi
+    if ! pgrep polybar > /dev/null; then
+        $HOME/polybar-collection/launch.sh > /dev/null 2>&1
+    else
+        pkill polybar
+        $HOME/polybar-collection/launch.sh > /dev/null 2>&1
+    fi
+
+    pkill -USR1 -x sxhkd
 fi
