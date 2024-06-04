@@ -2,6 +2,12 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
+picom --experimental-backends -b > /dev/null 2>&1
+nitrogen --restore > /dev/null 2>&1
+$HOME/polybar-collection/launch.sh > /dev/null 2>&1
+
+xrandr --output HDMI-0 --primary --mode 1920x1080 --rate 165 &
+
 bspc monitor HDMI-0 -d I II III IV V VI VII VIII IX X
 
 bspc config border_width        2.5
