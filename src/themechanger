@@ -13,8 +13,12 @@ done
 
 cd "$HOME/config-switcher/src" || exit
 
-./main
-theme=$(cat tmp.txt)
+./main $SRC_DIR/themes.txt
+mapfile -t vars < tmp.txt
+
+theme=${vars[0]}
+wm=${vars[1]}
+term=${vars[2]}
 
 rm -rf themes.txt
 rm -rf tmp.txt
@@ -92,7 +96,7 @@ elif [ "$theme" = "enhanced_productivity" ]; then
     cp "$THEME_DIR/enhanced_productivity/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
 
     cp "$THEME_DIR/enhanced_productivity/fish/config.fish" "$HOME/.config/fish/config.fish"
-    cp "$THEME_DIR/enhanced_productivity/i3/config" "$HOME/.config/i3/config"
+    # cp "$THEME_DIR/enhanced_productivity/i3/config" "$HOME/.config/i3/config"
     cp "$THEME_DIR/enhanced_productivity/picom/picom.conf" "$HOME/.config/picom/picom.conf"
     cp "$THEME_DIR/enhanced_productivity/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
     cp "$THEME_DIR/enhanced_productivity/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
