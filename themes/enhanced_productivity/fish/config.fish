@@ -18,13 +18,13 @@ xset r rate 300 50
 
 # System information tool
 # Adding some padding to fastfetch because it looks bad
+# --logo-color-1 blue --logo-color-2 blue --color-keys blue 
 function ff
     echo
-    fastfetch --logo arch_small --logo-color-1 blue --logo-color-2 blue --color-keys blue --logo-padding-left 2
+    fastfetch --logo Linux_small --logo-padding-left 2 --color-keys yellow
     echo
 end
 
-ff
 # clears and runs fetch cli
 alias c="clear;ff"
 
@@ -58,8 +58,8 @@ function transfer
   scp -r z2004200@hopper.cs.niu.edu:$remote_path $local_destination
   echo "Transfer complete."
 end
-# Setting PATHS
 
+# Setting PATHS
 set -e fish_user_paths
 set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/Applications $fish_user_paths $HOME/scripts
 
@@ -77,6 +77,6 @@ set fish_prompt_pwd_dir_length 0
 
 alias update="sudo pacman -Syyu"
 
-set fish_color_user cyan
+set fish_color_user red
 set fish_color_host brblack
-set fish_color_cwd brblue
+set fish_color_cwd bryellow

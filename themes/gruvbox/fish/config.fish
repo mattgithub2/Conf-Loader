@@ -1,8 +1,8 @@
 # reloads fish
 function reload
-    exec fish
     set -l config (status -f)
     echo "reloading: $config"
+    exec fish
 end
 
 # Function for starting spotify-tui
@@ -78,4 +78,6 @@ set fish_prompt_pwd_dir_length 0
 
 alias update="sudo pacman -Syyu"
 
-
+set fish_color_user red
+set fish_color_host brblack
+set fish_color_cwd bryellow

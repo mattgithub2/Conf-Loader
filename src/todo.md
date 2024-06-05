@@ -1,11 +1,11 @@
- Config Switcher
-TUI tool that allows you to set configs for you linux machine
+# Config Switcher
+# TUI tool that allows you to set configs presets for your linux machine
 
-- Create a tui that gives the user a menu of configs to choose from
-    - Uses the C ncurses library 
-    to display the TUI
 
-- Create a bash script that changes 
-the users .config files to the ones 
-found under Themes/
+#  Integrate nvim themes
+
+# Installation
+git clone git@github.com:mattgithub2/config-switcher.git ~/
+cd config-switcher/src
+cp themechanger ~/.bin
 

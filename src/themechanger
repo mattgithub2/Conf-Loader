@@ -53,6 +53,7 @@ if [ "$theme" = "Catppuccin" ]; then
 
     bspc wm -r
     pkill -USR1 -x sxhkd
+    clear; exec fish
 
 elif [ "$theme" = "gruvbox" ]; then
     wallpaper="$WALLPAPER_DIR/gruv.jpg"
@@ -81,4 +82,31 @@ elif [ "$theme" = "gruvbox" ]; then
 
     bspc wm -r
     pkill -USR1 -x sxhkd
+    clear; exec fish
+elif [ "$theme" = "enhanced_productivity" ]; then
+    wallpaper="$WALLPAPER_DIR/enhanced_productivity.png"
+    nitrogen --set-zoom-fill "$wallpaper" --save > /dev/null 2>&1
+
+    cp "$THEME_DIR/enhanced_productivity/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+
+    cp "$THEME_DIR/enhanced_productivity/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+
+    cp "$THEME_DIR/enhanced_productivity/fish/config.fish" "$HOME/.config/fish/config.fish"
+    cp "$THEME_DIR/enhanced_productivity/i3/config" "$HOME/.config/i3/config"
+    cp "$THEME_DIR/enhanced_productivity/picom/picom.conf" "$HOME/.config/picom/picom.conf"
+    cp "$THEME_DIR/enhanced_productivity/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
+    cp "$THEME_DIR/enhanced_productivity/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
+
+    if pgrep picom > /dev/null; then
+        pkill picom
+    fi
+
+    if pgrep polybar > /dev/null; then
+        pkill polybar
+        while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+    fi
+
+    bspc wm -r
+    pkill -USR1 -x sxhkd
+    clear; exec fish
 fi

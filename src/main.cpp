@@ -76,7 +76,6 @@ std::string menu_options(WINDOW * win) {
     }
     std::string selected_theme = themes[highlight];
     return selected_theme;
-    // printw("Selected Theme: %s", selected_theme.c_str());
 }
 int main(int argc, char **argv){
 
@@ -110,6 +109,7 @@ int main(int argc, char **argv){
 
     keypad(menu, true);
     // wmove(menu,1,1);
+    curs_set(0);
     wrefresh(menu);
     std::string theme = menu_options(menu);
 

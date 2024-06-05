@@ -2,6 +2,9 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
+bspc config top_padding 0
+bspc config bottom_padding 0
+
 picom --experimental-backends -b > /dev/null 2>&1
 nitrogen --restore > /dev/null 2>&1
 $HOME/polybar-collection/launch.sh > /dev/null 2>&1
