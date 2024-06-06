@@ -4,7 +4,7 @@ function reload
     echo "reloading: $config"
     exec fish
 end
-
+#test
 # Function for starting spotify-tui
 function music
     if test -z (ps -xj | pgrep spotifyd)

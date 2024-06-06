@@ -1,11 +1,12 @@
 # i3 config file (v4)
 set $mod Mod4
 
+gaps top 0
+gaps bottom 0
+
 assign [class="Inkscape"] 5
 
-for_window [class="Blueman-manager"] floating enable
-
-exec --no-startup-id picom
+exec_always --no-startup-id picom --experimental-backends -b
 
 # Start nitrogen (wallpaper)
 exec_always --no-startup-id nitrogen --restore
@@ -169,5 +170,5 @@ set $yellowbrown	#e1b700
 #class		        	    border		bground		text		indicator	    child_border
 client.focused		    	$cyan	    $cyan	    $cyan        $cyan	        $cyan
 client.unfocused	    	$white	    $white	    $white		$white	        $white
-client.focused_inactive		$darkblue	$black		$white		$black		    $black
+client.focused_inactive		$white	    $white		$white		$white		    $white
 client.urgent		    	$red		$red		$white		$yellowbrown    $yellowbrown

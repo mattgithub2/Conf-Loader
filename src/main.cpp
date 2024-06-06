@@ -139,7 +139,7 @@ int main(int argc, char **argv){
     mvwprintw(options, 0,1, " Select Your Window Manager ");
     wattroff(options, A_BOLD);
 
-    std::vector<std::string> wms = {"Bspwm", "i3wm"};
+    std::vector<std::string> wms = {"bspwm", "i3"};
     std::string wm = menu_options(options, wms);
 
     wclear(options); box(options,0,0);
@@ -147,12 +147,10 @@ int main(int argc, char **argv){
     mvwprintw(options, 0,1, " Select Your Terminal Emulator ");
     wattroff(options, A_BOLD);
 
-    std::vector<std::string> terms = {"Alacritty", "Kitty"};
+    std::vector<std::string> terms = {"alacritty", "kitty"};
     std::string term = menu_options(options, terms);
 
 
-
-    getch();
 
     endwin();
 

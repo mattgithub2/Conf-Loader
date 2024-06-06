@@ -7,7 +7,7 @@ bspc config bottom_padding 0
 
 picom --experimental-backends -b > /dev/null 2>&1
 nitrogen --restore > /dev/null 2>&1
-$HOME/polybar-collection/launch.sh > /dev/null 2>&1
+polybar &
 xrandr --output HDMI-0 --primary --mode 1920x1080 --rate 165 &
 
 bspc monitor HDMI-0 -d I II III IV V VI VII VIII IX X

@@ -1,18 +1,12 @@
 # i3 config file (v4)
 set $mod Mod4
 
-gaps top 0
-gaps bottom 0
-
 assign [class="Inkscape"] 5
 
-exec_always --no-startup-id picom --experimental-backends -b
+exec --no-startup-id picom --experimental-backends -b
 
 # Start nitrogen (wallpaper)
 exec_always --no-startup-id nitrogen --restore
-
-# POLYBAR
-exec_always --no-startup-id polybar &
 
 # Force highest refersh rate
 exec --no-startup-id xrandr --output HDMI-0 --primary --mode 1920x1080 --rate 165 --output eDP-1 --mode 1920x1080 --rate 144
@@ -45,7 +39,7 @@ bindsym $mod+i exec thunar
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec /home/mattw/.config/rofi/launchers/type-2/launcher.sh
+bindsym $mod+d exec $HOME/.config/rofi/launchers/type-1/launcher.sh
 
 # change focus
 bindsym $mod+j focus left
@@ -126,9 +120,9 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # gapsconfig
-for_window [class="^.*"] border pixel 2.5
-gaps inner 8
-gaps outer 6
+for_window [class="^.*"] border pixel 1.5
+gaps inner 2
+gaps outer 2
 
 #NON IMPORTANT STUFF
 set_from_resource $fg i3wm.color0 #282a2e
@@ -152,9 +146,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# bar {
-#         status_command i3status
-# }
+bar {
+        status_command i3status
+}
 
 # Define colors     variables
 set $darkblue	    #6272a4
@@ -166,6 +160,7 @@ set $purple		    #bd93f9
 set $darkpurp       #301934
 set $yellowbrown	#e1b700
 set $grey           #808080
+
 # Define colors for windows
 #class		        	    border		bground		text		indicator	    child_border
 client.focused		    	$grey	    $grey	    $grey        $grey	        $grey

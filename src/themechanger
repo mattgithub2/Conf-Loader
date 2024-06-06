@@ -23,22 +23,52 @@ term=${vars[2]}
 rm -rf themes.txt
 rm -rf tmp.txt
 
+if [ ! -d "$HOME/.config/rofi" ]; then
+    cp -r "$ROOT_DIR/globals/rofi" "$HOME/.config/"
+fi
+
+if [ ! -d "$HOME/polybar-collection" ]; then
+    cp -r "$ROOT_DIR/globals/polybar-collection" "$HOME"
+fi
+
+if [ ! -d "$HOME/polybar-scripts" ]; then
+    cp -r "$ROOT_DIR/globals/polybar-scripts" "$HOME"
+fi
+
 if [ "$theme" = "Catppuccin" ]; then
 
     wallpaper="$WALLPAPER_DIR/catppuccin.jpg"
     nitrogen --set-zoom-fill "$wallpaper" --save > /dev/null 2>&1
     
-    cp "$THEME_DIR/Catppuccin/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+    if [ "$term" = "alacritty" ]; then
+        cp "$THEME_DIR/Catppuccin/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+    elif [ "$term" = "kitty" ]; then
+        cp "$THEME_DIR/Catppuccin/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+    fi
 
-    cp "$THEME_DIR/Catppuccin/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
-    $HOME/.config/bspwm/bspwmrc
+    # TODO 
+    # Change this for the other cases
+    if [ "$wm" = "i3" ]; then
+        cp "$THEME_DIR/Catppuccin/i3/config" "$HOME/.config/i3/config"
+        if [ "$term" = "kitty" ]; then
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/i3/config"
+        else
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/i3/config"
+        fi
+    elif [ "$wm" = "bspwm" ]; then
+        cp "$THEME_DIR/Catppuccin/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+        cp "$THEME_DIR/Catppuccin/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
+        if [ "$term" = "kitty" ];then
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        else 
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        fi
+    fi
+
 
     cp "$THEME_DIR/Catppuccin/fish/config.fish" "$HOME/.config/fish/config.fish"
-    cp "$THEME_DIR/Catppuccin/i3/config" "$HOME/.config/i3/config"
     cp "$THEME_DIR/Catppuccin/picom/picom.conf" "$HOME/.config/picom/picom.conf"
     cp "$THEME_DIR/Catppuccin/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
-    cp "$THEME_DIR/Catppuccin/polybar-collection/launch.sh" "$HOME/polybar-collection/launch.sh"
-    cp "$THEME_DIR/Catppuccin/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
     cp "$THEME_DIR/Catppuccin/polybar-collection/launch.sh" "$HOME/polybar-collection/launch.sh"
     cp "$THEME_DIR/Catppuccin/polybar-collection/modules.ini" "$HOME/polybar-collection/modules.ini"
     
@@ -55,25 +85,46 @@ if [ "$theme" = "Catppuccin" ]; then
         while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
     fi
 
-    bspc wm -r
-    pkill -USR1 -x sxhkd
+    [ "$wm" = "bspwm" ] && bspc wm -r
+    [ "$wm" = "i3" ] && i3-msg restart
+    [ "$wm" = "bspwm" ] && pkill -USR1 -x sxhkd
+
     clear; exec fish
 
 elif [ "$theme" = "gruvbox" ]; then
+
     wallpaper="$WALLPAPER_DIR/gruv.jpg"
     nitrogen --set-zoom-fill "$wallpaper" --save > /dev/null 2>&1
 
-    cp "$THEME_DIR/gruvbox/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+    if [ "$term" = "alacritty" ]; then
+        cp "$THEME_DIR/gruvbox/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+    elif [ "$term" = "kitty" ]; then
+        cp "$THEME_DIR/gruvbox/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+    fi
 
-    cp "$THEME_DIR/gruvbox/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+    if [ "$wm" = "i3" ]; then
+        cp "$THEME_DIR/gruvbox/i3/config" "$HOME/.config/i3/config"
+        if [ "$term" = "kitty" ]; then
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/i3/config"
+        else
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/i3/config"
+        fi
+    elif [ "$wm" = "bspwm" ]; then
+        cp "$THEME_DIR/gruvbox/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+        cp "$THEME_DIR/gruvbox/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
+        if [ "$term" = "kitty" ];then
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        else 
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        fi
+    fi
 
     cp "$THEME_DIR/gruvbox/fish/config.fish" "$HOME/.config/fish/config.fish"
-    cp "$THEME_DIR/gruvbox/i3/config" "$HOME/.config/i3/config"
     cp "$THEME_DIR/gruvbox/picom/picom.conf" "$HOME/.config/picom/picom.conf"
+    cp "$THEME_DIR/gruvbox/polybar/config.ini" "$HOME/.config/polybar/config.ini"
     cp "$THEME_DIR/gruvbox/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
-    cp "$THEME_DIR/gruvbox/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
-    cp "$THEME_DIR/gruvbox/polybar-collection/launch.sh" "$HOME/polybar-collection/launch.sh"
-    cp "$THEME_DIR/gruvbox/polybar-collection/modules.ini" "$HOME/polybar-collection/modules.ini"
+
+    # cp -r "$THEME_DIR/gruvbox/rofi" "$HOME/.config/rofi"
     
     if pgrep picom > /dev/null; then
         pkill picom
@@ -84,22 +135,43 @@ elif [ "$theme" = "gruvbox" ]; then
         while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
     fi
 
-    bspc wm -r
-    pkill -USR1 -x sxhkd
+    [ "$wm" = "bspwm" ] && bspc wm -r
+    [ "$wm" = "i3" ] && i3-msg restart
+    [ "$wm" = "bspwm" ] && pkill -USR1 -x sxhkd
     clear; exec fish
+
 elif [ "$theme" = "enhanced_productivity" ]; then
+
     wallpaper="$WALLPAPER_DIR/enhanced_productivity.png"
     nitrogen --set-zoom-fill "$wallpaper" --save > /dev/null 2>&1
 
-    cp "$THEME_DIR/enhanced_productivity/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+    if [ "$term" = "alacritty" ]; then
+        cp "$THEME_DIR/enhanced_productivity/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+    elif [ "$term" = "kitty" ]; then
+        cp "$THEME_DIR/enhanced_productivity/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+    fi
 
-    cp "$THEME_DIR/enhanced_productivity/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+    if [ "$wm" = "i3" ]; then
+        cp "$THEME_DIR/enhanced_productivity/i3/config" "$HOME/.config/i3/config"
+        if [ "$term" = "kitty" ]; then
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/i3/config"
+        else
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/i3/config"
+        fi
+    elif [ "$wm" = "bspwm" ]; then
+        cp "$THEME_DIR/enhanced_productivity/bspwm/bspwmrc" "$HOME/.config/bspwm/bspwmrc"
+        cp "$THEME_DIR/enhanced_productivity/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
+        if [ "$term" = "kitty" ];then
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        else 
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        fi
+    fi
 
     cp "$THEME_DIR/enhanced_productivity/fish/config.fish" "$HOME/.config/fish/config.fish"
-    # cp "$THEME_DIR/enhanced_productivity/i3/config" "$HOME/.config/i3/config"
     cp "$THEME_DIR/enhanced_productivity/picom/picom.conf" "$HOME/.config/picom/picom.conf"
     cp "$THEME_DIR/enhanced_productivity/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
-    cp "$THEME_DIR/enhanced_productivity/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/sxhkdrc"
+    # cp -r "$THEME_DIR/enhanced_productivity/rofi" "$HOME/.config/rofi"
 
     if pgrep picom > /dev/null; then
         pkill picom
@@ -110,7 +182,9 @@ elif [ "$theme" = "enhanced_productivity" ]; then
         while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
     fi
 
-    bspc wm -r
-    pkill -USR1 -x sxhkd
+    [ "$wm" = "bspwm" ] && bspc wm -r
+    [ "$wm" = "i3" ] && i3-msg restart
+    [ "$wm" = "bspwm" ] && pkill -USR1 -x sxhkd
+
     clear; exec fish
 fi
