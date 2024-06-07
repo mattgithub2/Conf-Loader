@@ -3,6 +3,7 @@ ROOT_DIR="$HOME/config-switcher"
 SRC_DIR="$HOME/config-switcher/src"
 THEME_DIR="$HOME/config-switcher/themes"
 WALLPAPER_DIR="$HOME/config-switcher/wallpapers"
+
 function check_dir () {
     local dir="$1"
     if [ ! -d "$HOME/.config/$dir" ]; then
@@ -89,6 +90,9 @@ if [ "$theme" = "Catppuccin" ]; then
     # nvim configuration changes
     # cp "$THEME_DIR/Catppuccin/nvim/init.lua" "$HOME/.config/nvim/init.lua"
     
+    sed -i "/colorscheme/c\vim.cmd('colorscheme catppuccin-mocha')" "$HOME/.config/nvim/init.lua"
+    sed -i "/airline_theme/c\vim.g.airline_theme = 'catppuccin'" "$HOME/.config/nvim/init.lua"
+
     if pgrep picom > /dev/null; then
         pkill picom
     fi
@@ -145,6 +149,9 @@ elif [ "$theme" = "gruvbox" ]; then
 
     # cp -r "$THEME_DIR/gruvbox/rofi" "$HOME/.config/rofi"
     
+    sed -i "/colorscheme/c\vim.cmd('colorscheme gruvbox')" "$HOME/.config/nvim/init.lua"
+    sed -i "/airline_theme/c\vim.g.airline_theme = 'base16_gruvbox_dark_hard'" "$HOME/.config/nvim/init.lua"
+
     if pgrep picom > /dev/null; then
         pkill picom
     fi
@@ -197,6 +204,9 @@ elif [ "$theme" = "enhanced_productivity" ]; then
     cp "$THEME_DIR/enhanced_productivity/picom/picom.conf" "$HOME/.config/picom/"
     cp "$THEME_DIR/enhanced_productivity/zathura/zathurarc" "$HOME/.config/zathura/"
 
+
+    sed -i "/colorscheme/c\vim.cmd('colorscheme retrobox')" "$HOME/.config/nvim/init.lua"
+    sed -i "/airline_theme/c\vim.g.airline_theme = 'base16_gruvbox_dark_hard'" "$HOME/.config/nvim/init.lua"
     if pgrep picom > /dev/null; then
         pkill picom
     fi

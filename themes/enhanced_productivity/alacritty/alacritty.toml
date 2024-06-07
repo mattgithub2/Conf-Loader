@@ -1,6 +1,6 @@
 shell = "/usr/bin/fish"
 [font]
-size = 9
+size = 10
 normal = { family = "Intel One Mono", style = "Regular"}
 
 # Name: Default (dark)
