@@ -1,8 +1,8 @@
 #! /bin/bash
-ROOT_DIR="$HOME/config-switcher"
-SRC_DIR="$HOME/config-switcher/src"
-THEME_DIR="$HOME/config-switcher/themes"
-WALLPAPER_DIR="$HOME/config-switcher/wallpapers"
+ROOT_DIR="$HOME/Conf-Loader"
+SRC_DIR="$HOME/Conf-Loader/src"
+THEME_DIR="$HOME/Conf-Loader/themes"
+WALLPAPER_DIR="$HOME/Conf-Loader/wallpapers"
 
 function check_dir () {
     local dir="$1"
@@ -17,7 +17,7 @@ for i in *; do
     echo $i >> $SRC_DIR/themes.txt
 done
 
-cd "$HOME/config-switcher/src" || exit
+cd "$HOME/Conf-Loader/src" || exit
 
 ./main $SRC_DIR/themes.txt
 mapfile -t vars < tmp.txt 
