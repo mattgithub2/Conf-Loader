@@ -8,3 +8,4 @@ cd "$HOME/config-switcher/fonts"
 for i in *; do
     cp -r "$i" "$HOME/.fonts"
 done
+fc-cache -fv

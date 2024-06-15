@@ -20,9 +20,9 @@ done
 cd "$HOME/config-switcher/src" || exit
 
 ./main $SRC_DIR/themes.txt
-mapfile -t vars < tmp.txt
+mapfile -t vars < tmp.txt 
 
-theme=${vars[0]}
+theme=${vars[0]} 
 wm=${vars[1]}
 term=${vars[2]}
 
@@ -120,25 +120,32 @@ elif [ "$theme" = "gruvbox" ]; then
     elif [ "$term" = "kitty" ]; then
         check_dir "kitty"
         cp "$THEME_DIR/gruvbox/kitty/kitty.conf" "$HOME/.config/kitty/"
+    elif [ "$term" = "urxvt" ]; then
+        cp "$THEME_DIR/gruvbox/urxvt/.Xresources" "$HOME/.Xresources"
     fi
 
     if [ "$wm" = "i3" ]; then
         check_dir "i3"
         cp "$THEME_DIR/gruvbox/i3/config" "$HOME/.config/i3/"
         if [ "$term" = "kitty" ]; then
-            sed -i 's/alacritty/kitty/g' "$HOME/.config/i3/config"
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/i3/config" || sed -i 's/urxvt/kitty/g' "$HOME/.config/i3/config"
+        elif [ "$term" = "urxvt" ]; then
+            sed -i 's/alacritty/urxvt -e fish/g' "$HOME/.config/i3/config" || sed -i 's/kitty/urxvt -e fish/g' "$HOME/.config/i3/config"
         else
-            sed -i 's/kitty/alacritty/g' "$HOME/.config/i3/config"
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/i3/config" || sed -i 's/urxvt/alacritty/g' "$HOME/.config/i3/config"
         fi
+
     elif [ "$wm" = "bspwm" ]; then
         check_dir "bspwm"
         check_dir "sxhkd"
         cp "$THEME_DIR/gruvbox/bspwm/bspwmrc" "$HOME/.config/bspwm/"
         cp "$THEME_DIR/gruvbox/sxhkd/sxhkdrc" "$HOME/.config/sxhkd/"
-        if [ "$term" = "kitty" ];then
-            sed -i 's/alacritty/kitty/g' "$HOME/.config/sxhkd/sxhkdrc"
-        else 
-            sed -i 's/kitty/alacritty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        if [ "$term" = "kitty" ]; then
+            sed -i 's/alacritty/kitty/g' "$HOME/.config/sxhkd/sxhkdrc" || sed -i 's/urxvt/kitty/g' "$HOME/.config/sxhkd/sxhkdrc"
+        elif [ "$term" = "urxvt" ]; then
+            sed -i 's/alacritty/urxvt -e fish/g' "$HOME/.config/sxhkd/sxhkdrc" || sed -i 's/kitty/urxvt -e fish/g' "$HOME/.config/sxhkd/sxhkdrc"
+        else
+            sed -i 's/kitty/alacritty/g' "$HOME/.config/sxhkd/sxhkdrc" || sed -i 's/urxvt/alacritty/g' "$HOME/.config/sxhkd/sxhkdrc"
         fi
     fi
 
@@ -149,7 +156,7 @@ elif [ "$theme" = "gruvbox" ]; then
 
     # cp -r "$THEME_DIR/gruvbox/rofi" "$HOME/.config/rofi"
     
-    sed -i "/colorscheme/c\vim.cmd('colorscheme gruvbox')" "$HOME/.config/nvim/init.lua"
+    sed -i "/colorscheme/c\vim.cmd('colorscheme gruvbox8')" "$HOME/.config/nvim/init.lua"
     sed -i "/airline_theme/c\vim.g.airline_theme = 'base16_gruvbox_dark_hard'" "$HOME/.config/nvim/init.lua"
 
     if pgrep picom > /dev/null; then
@@ -165,6 +172,7 @@ elif [ "$theme" = "gruvbox" ]; then
     [ "$wm" = "i3" ] && i3-msg restart
     [ "$wm" = "bspwm" ] && pkill -USR1 -x sxhkd
     [ "$term" = "kitty" ] && kill -SIGUSR1 $(pgrep kitty)
+    [ "$term" = "urxvt" ] && xrdb "HOME/.Xresources"
     clear; exec fish
 
 elif [ "$theme" = "enhanced_productivity" ]; then
@@ -203,7 +211,7 @@ elif [ "$theme" = "enhanced_productivity" ]; then
     cp "$THEME_DIR/enhanced_productivity/fish/config.fish" "$HOME/.config/fish/"
     cp "$THEME_DIR/enhanced_productivity/picom/picom.conf" "$HOME/.config/picom/"
     cp "$THEME_DIR/enhanced_productivity/zathura/zathurarc" "$HOME/.config/zathura/"
-
+    cp "$THEME_DIR/enhanced_productivity/polybar/config.ini" "$HOME/.config/polybar/"
 
     sed -i "/colorscheme/c\vim.cmd('colorscheme retrobox')" "$HOME/.config/nvim/init.lua"
     sed -i "/airline_theme/c\vim.g.airline_theme = 'base16_gruvbox_dark_hard'" "$HOME/.config/nvim/init.lua"

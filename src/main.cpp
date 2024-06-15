@@ -147,10 +147,8 @@ int main(int argc, char **argv){
     mvwprintw(options, 0,1, " Select Your Terminal Emulator ");
     wattroff(options, A_BOLD);
 
-    std::vector<std::string> terms = {"alacritty", "kitty"};
+    std::vector<std::string> terms = {"alacritty", "kitty", "urxvt"};
     std::string term = menu_options(options, terms);
-
-
 
     endwin();
 

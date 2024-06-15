@@ -62,7 +62,7 @@ end
 
 # Setting PATHS
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/Applications $fish_user_paths $HOME/scripts
+set -U fish_user_paths $HOME/.bin $HOME/.local/bin /usr/bin $HOME/Applications $HOME/scripts $fish_user_paths 
 
 # Sets tools
 set -x EDITOR nvim
@@ -81,3 +81,5 @@ alias update="sudo pacman -Syyu"
 set fish_color_user red
 set fish_color_host brblack
 set fish_color_cwd bryellow
+
+alias ls="ls -h --color=auto"

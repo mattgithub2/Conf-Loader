@@ -2,6 +2,7 @@
 # wm independent hotkeys
 #
 #
+# GJKKGJFKdjgk
 # terminal emulator
 super + Return
 	alacritty
@@ -11,7 +12,7 @@ super + d
 	/home/mattw/.config/rofi/launchers/type-2/launcher.sh
 
 super + p
-    firefox
+    librewolf
 
 super + o
     discord
